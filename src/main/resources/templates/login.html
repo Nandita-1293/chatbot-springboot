@@ -1,0 +1,94 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Login – Nova AI Chatbot</title>
+    <link rel="stylesheet" th:href="@{/css/main.css}">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+</head>
+<body class="auth-body">
+
+<div class="auth-bg">
+    <div class="auth-particles"></div>
+</div>
+
+<div class="auth-wrapper">
+    <!-- Brand Panel -->
+    <div class="auth-brand">
+        <div class="brand-logo">🤖</div>
+        <h1 class="brand-name">Nova AI</h1>
+        <p class="brand-tagline">Your Intelligent Conversation Partner</p>
+        <div class="brand-features">
+            <div class="brand-feature">⚡ Instant AI Responses</div>
+            <div class="brand-feature">🔒 Secure & Private</div>
+            <div class="brand-feature">🌐 Always Available</div>
+        </div>
+    </div>
+
+    <!-- Login Card -->
+    <div class="auth-card">
+        <div class="auth-card-header">
+            <h2>Welcome Back</h2>
+            <p>Sign in to continue your AI conversations</p>
+        </div>
+
+        <!-- Alerts -->
+        <div th:if="${error}" class="alert alert-error">
+            <span class="alert-icon">⚠️</span>
+            <span th:text="${error}"></span>
+        </div>
+        <div th:if="${message}" class="alert alert-success">
+            <span class="alert-icon">✅</span>
+            <span th:text="${message}"></span>
+        </div>
+        <div th:if="${success}" class="alert alert-success">
+            <span class="alert-icon">✅</span>
+            <span th:text="${success}"></span>
+        </div>
+
+        <form th:action="@{/login}" method="post" class="auth-form" id="loginForm">
+            <input type="hidden" th:name="${_csrf.parameterName}" th:value="${_csrf.token}" />
+
+            <div class="form-group">
+                <label for="email">Email Address</label>
+                <div class="input-wrapper">
+                    <span class="input-icon">📧</span>
+                    <input type="email" id="email" name="email" placeholder="your@email.com"
+                           required autocomplete="email" class="form-input">
+                </div>
+            </div>
+
+            <div class="form-group">
+                <label for="password">Password</label>
+                <div class="input-wrapper">
+                    <span class="input-icon">🔑</span>
+                    <input type="password" id="password" name="password" placeholder="Enter your password"
+                           required autocomplete="current-password" class="form-input">
+                    <button type="button" class="toggle-pwd" onclick="togglePassword('password')">👁️</button>
+                </div>
+            </div>
+
+            <button type="submit" class="btn-primary btn-full">
+                <span>Sign In</span>
+                <span class="btn-arrow">→</span>
+            </button>
+        </form>
+
+        <div class="auth-divider"><span>or</span></div>
+
+        <div class="demo-login">
+            <p>🎯 <strong>Demo Account:</strong> demo@chatbot.com / demo123</p>
+        </div>
+
+        <div class="auth-footer">
+            Don't have an account?
+            <a th:href="@{/register}" class="auth-link">Create one free →</a>
+        </div>
+    </div>
+</div>
+
+<script th:src="@{/js/auth.js}"></script>
+</body>
+</html>

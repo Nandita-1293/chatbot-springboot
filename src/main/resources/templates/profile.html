@@ -1,0 +1,107 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org"
+      xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Profile – Nova AI</title>
+    <link rel="stylesheet" th:href="@{/css/main.css}">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+</head>
+<body class="app-body">
+
+<nav class="navbar">
+    <div class="navbar-container">
+        <a class="navbar-brand" th:href="@{/home}">
+            <span class="navbar-logo">🤖</span>
+            <span class="navbar-name">Nova AI</span>
+        </a>
+        <div class="navbar-links">
+            <a th:href="@{/home}" class="nav-link">🏠 Home</a>
+            <a th:href="@{/chat}" class="nav-link">💬 Chat</a>
+            <a th:href="@{/profile}" class="nav-link active">👤 Profile</a>
+        </div>
+        <div class="navbar-right">
+            <span class="nav-username" sec:authentication="name">User</span>
+            <a th:href="@{/logout}" class="btn-logout">Logout</a>
+        </div>
+    </div>
+</nav>
+
+<main class="profile-main">
+    <div class="profile-container">
+
+        <!-- Profile Card -->
+        <div class="profile-card">
+            <div class="profile-avatar-wrap">
+                <div class="profile-avatar" th:text="${user != null ? user.name.substring(0,1).toUpperCase() : 'U'}">U</div>
+                <div class="profile-badge">✓</div>
+            </div>
+            <h2 class="profile-name" th:text="${user?.name ?: 'User'}">User Name</h2>
+            <p class="profile-email" th:text="${user?.email ?: ''}">user@email.com</p>
+            <div class="profile-role">AI Chatbot Member</div>
+
+            <div class="profile-stats">
+                <div class="profile-stat">
+                    <strong>Active</strong>
+                    <span>Status</span>
+                </div>
+                <div class="profile-stat">
+                    <strong>User</strong>
+                    <span>Role</span>
+                </div>
+                <div class="profile-stat">
+                    <strong th:text="${user?.gender ?: 'N/A'}">N/A</strong>
+                    <span>Gender</span>
+                </div>
+            </div>
+        </div>
+
+        <!-- Details Card -->
+        <div class="profile-details">
+            <div class="details-header">
+                <h3>Account Information</h3>
+            </div>
+
+            <div class="details-grid">
+                <div class="detail-item">
+                    <div class="detail-label">👤 Full Name</div>
+                    <div class="detail-value" th:text="${user?.name ?: 'N/A'}">N/A</div>
+                </div>
+                <div class="detail-item">
+                    <div class="detail-label">📧 Email Address</div>
+                    <div class="detail-value" th:text="${user?.email ?: 'N/A'}">N/A</div>
+                </div>
+                <div class="detail-item">
+                    <div class="detail-label">📱 Mobile Number</div>
+                    <div class="detail-value" th:text="${user?.mobile ?: 'N/A'}">N/A</div>
+                </div>
+                <div class="detail-item">
+                    <div class="detail-label">🧬 Gender</div>
+                    <div class="detail-value" th:text="${user?.gender ?: 'N/A'}">N/A</div>
+                </div>
+                <div class="detail-item">
+                    <div class="detail-label">📅 Member Since</div>
+                    <div class="detail-value" th:text="${user?.createdAt != null ? #temporals.format(user.createdAt, 'dd MMM yyyy') : 'N/A'}">N/A</div>
+                </div>
+                <div class="detail-item">
+                    <div class="detail-label">🔒 Security</div>
+                    <div class="detail-value">Password Protected (BCrypt)</div>
+                </div>
+            </div>
+
+            <div class="profile-actions">
+                <a th:href="@{/chat}" class="btn-primary">
+                    💬 Start Chatting
+                </a>
+                <a th:href="@{/home}" class="btn-outline">
+                    🏠 Go Home
+                </a>
+            </div>
+        </div>
+
+    </div>
+</main>
+
+</body>
+</html>

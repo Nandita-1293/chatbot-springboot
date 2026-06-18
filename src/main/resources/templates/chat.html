@@ -1,0 +1,135 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org"
+      xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Chat – Nova AI</title>
+    <meta name="_csrf" th:content="${_csrf.token}"/>
+    <meta name="_csrf_header" th:content="${_csrf.headerName}"/>
+    <link rel="stylesheet" th:href="@{/css/main.css}">
+    <link rel="stylesheet" th:href="@{/css/chat.css}">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+</head>
+<body class="chat-body" data-theme="light">
+
+<!-- Sidebar -->
+<aside class="chat-sidebar" id="sidebar">
+    <div class="sidebar-header">
+        <div class="sidebar-brand">
+            <span>🤖</span> Nova AI
+        </div>
+        <button class="sidebar-close" onclick="toggleSidebar()">✕</button>
+    </div>
+
+    <div class="sidebar-user">
+        <div class="user-avatar-lg" th:text="${userName != null ? userName.substring(0,1).toUpperCase() : 'U'}">U</div>
+        <div class="user-info">
+            <div class="user-name" th:text="${userName != null ? userName : 'User'}">User</div>
+            <div class="user-status">● Online</div>
+        </div>
+    </div>
+
+    <nav class="sidebar-nav">
+        <a th:href="@{/home}" class="sidebar-link">🏠 Home</a>
+        <a th:href="@{/chat}" class="sidebar-link active">💬 New Chat</a>
+        <a th:href="@{/profile}" class="sidebar-link">👤 Profile</a>
+    </nav>
+
+    <div class="sidebar-suggestions">
+        <div class="suggestions-title">Quick Topics</div>
+        <button class="suggestion-btn" onclick="sendSuggestion('Hello! Who are you?')">👋 Greeting</button>
+        <button class="suggestion-btn" onclick="sendSuggestion('Tell me a joke')">😂 Joke</button>
+        <button class="suggestion-btn" onclick="sendSuggestion('What is artificial intelligence?')">🤖 About AI</button>
+        <button class="suggestion-btn" onclick="sendSuggestion('How does Spring Boot work?')">🍃 Spring Boot</button>
+        <button class="suggestion-btn" onclick="sendSuggestion('100 + 250 * 3')">🧮 Calculator</button>
+        <button class="suggestion-btn" onclick="sendSuggestion('What can you do?')">✨ Capabilities</button>
+    </div>
+
+    <div class="sidebar-footer">
+        <button class="btn-clear" onclick="clearChat()">🗑️ Clear Chat</button>
+        <a th:href="@{/logout}" class="btn-logout-sm">🚪 Logout</a>
+    </div>
+</aside>
+
+<!-- Main Chat Area -->
+<div class="chat-main">
+
+    <!-- Chat Header -->
+    <header class="chat-header">
+        <button class="sidebar-toggle" onclick="toggleSidebar()">☰</button>
+        <div class="chat-header-info">
+            <div class="bot-avatar-sm">🤖</div>
+            <div>
+                <div class="bot-name">Nova AI Assistant</div>
+                <div class="bot-status" id="botStatus">● Online – Ready to chat</div>
+            </div>
+        </div>
+        <div class="header-actions">
+            <button class="icon-btn" onclick="toggleTheme()" title="Toggle Dark Mode" id="themeBtn">🌙</button>
+            <button class="icon-btn" onclick="clearChat()" title="Clear Chat">🗑️</button>
+            <a th:href="@{/home}" class="icon-btn" title="Home">🏠</a>
+        </div>
+    </header>
+
+    <!-- Messages -->
+    <main class="messages-area" id="messagesArea">
+
+        <!-- Welcome message -->
+        <div class="message-row bot-row" id="welcomeMsg">
+            <div class="msg-avatar">🤖</div>
+            <div class="msg-content">
+                <div class="message bot-message">
+                    <div class="msg-text">
+                        Hello <strong th:text="${userName != null ? userName : 'there'}">there</strong>! 👋 I'm <strong>Nova</strong>, your AI assistant.<br><br>
+                        I can help you with:<br>
+                        🎯 General questions &amp; knowledge<br>
+                        🧮 Math calculations (try: <em>25 * 4</em>)<br>
+                        💻 Programming &amp; Spring Boot<br>
+                        😂 Jokes &amp; entertainment<br>
+                        ⏰ Date &amp; time queries<br><br>
+                        What would you like to explore today?
+                    </div>
+                    <div class="msg-time">Just now</div>
+                </div>
+            </div>
+        </div>
+
+    </main>
+
+    <!-- Typing Indicator -->
+    <div class="typing-row" id="typingIndicator" style="display:none">
+        <div class="msg-avatar">🤖</div>
+        <div class="typing-bubble">
+            <span></span><span></span><span></span>
+        </div>
+    </div>
+
+    <!-- Input Area -->
+    <footer class="chat-input-area">
+        <div class="input-row">
+            <div class="input-wrapper-chat">
+                <textarea id="userInput" class="chat-input" placeholder="Type your message... (Enter to send)"
+                          rows="1" maxlength="1000" oninput="autoResize(this)" onkeydown="handleKey(event)"></textarea>
+                <span class="char-count" id="charCount">0/1000</span>
+            </div>
+            <button class="send-btn" id="sendBtn" onclick="sendMessage()" title="Send message">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                    <path d="M22 2L11 13M22 2L15 22L11 13L2 9L22 2Z"/>
+                </svg>
+            </button>
+        </div>
+        <div class="input-footer">
+            <span>Nova AI may make mistakes. Verify important information.</span>
+            <span id="wordCount">0 words</span>
+        </div>
+    </footer>
+
+</div>
+
+<!-- Scroll to bottom -->
+<button class="scroll-btn" id="scrollBtn" onclick="scrollToBottom()" style="display:none">↓</button>
+
+<script th:src="@{/js/chat.js}"></script>
+</body>
+</html>

@@ -1,0 +1,179 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org"
+      xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Home – Nova AI Chatbot</title>
+    <link rel="stylesheet" th:href="@{/css/main.css}">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+</head>
+<body class="app-body">
+
+<!-- Navigation -->
+<nav class="navbar">
+    <div class="navbar-container">
+        <a class="navbar-brand" th:href="@{/home}">
+            <span class="navbar-logo">🤖</span>
+            <span class="navbar-name">Nova AI</span>
+        </a>
+        <div class="navbar-links">
+            <a th:href="@{/home}" class="nav-link active">🏠 Home</a>
+            <a th:href="@{/chat}" class="nav-link">💬 Chat</a>
+            <a th:href="@{/profile}" class="nav-link">👤 Profile</a>
+        </div>
+        <div class="navbar-right">
+            <span class="nav-username" sec:authentication="name">User</span>
+            <a th:href="@{/logout}" class="btn-logout">Logout</a>
+        </div>
+        <button class="navbar-toggle" onclick="toggleNav()">☰</button>
+    </div>
+</nav>
+
+<!-- Hero Section -->
+<section class="hero-section">
+    <div class="hero-content">
+        <div class="hero-badge">🌟 AI-Powered Conversations</div>
+        <h1 class="hero-title">
+            <span th:text="${greeting != null ? greeting : 'Welcome to Nova AI'}">Welcome to Nova AI</span>
+        </h1>
+        <p class="hero-subtitle">
+            Experience the future of conversation. Ask anything, get intelligent responses, and explore the power of AI — all in one place.
+        </p>
+        <div class="hero-actions">
+            <a th:href="@{/chat}" class="btn-primary btn-lg">
+                💬 Start Chatting Now
+            </a>
+            <a href="#features" class="btn-outline btn-lg">
+                🎯 Explore Features
+            </a>
+        </div>
+        <div class="hero-stats">
+            <div class="stat"><strong>∞</strong><span>Conversations</span></div>
+            <div class="stat"><strong>24/7</strong><span>Available</span></div>
+            <div class="stat"><strong>100+</strong><span>Topics</span></div>
+        </div>
+    </div>
+    <div class="hero-visual">
+        <div class="hero-chat-preview">
+            <div class="preview-message bot-preview">
+                <div class="preview-avatar">🤖</div>
+                <div class="preview-bubble">Hello! How can I help you today? 😊</div>
+            </div>
+            <div class="preview-message user-preview">
+                <div class="preview-bubble">Tell me about Spring Boot!</div>
+            </div>
+            <div class="preview-message bot-preview">
+                <div class="preview-avatar">🤖</div>
+                <div class="preview-bubble">Spring Boot is an amazing Java framework! 🍃 It enables rapid application development...</div>
+            </div>
+            <div class="preview-typing">
+                <div class="preview-avatar">🤖</div>
+                <div class="typing-dots-preview">
+                    <span></span><span></span><span></span>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- Features -->
+<section class="features-section" id="features">
+    <div class="section-container">
+        <div class="section-header">
+            <h2>Everything You Need</h2>
+            <p>Powerful features designed for the best AI chat experience</p>
+        </div>
+        <div class="features-grid">
+            <div class="feature-card">
+                <div class="feature-icon">🧠</div>
+                <h3>Smart AI Responses</h3>
+                <p>Get intelligent, context-aware answers to your questions instantly.</p>
+            </div>
+            <div class="feature-card">
+                <div class="feature-icon">⚡</div>
+                <h3>Lightning Fast</h3>
+                <p>Powered by Spring Boot for blazing-fast response times.</p>
+            </div>
+            <div class="feature-card">
+                <div class="feature-icon">🔒</div>
+                <h3>Secure & Private</h3>
+                <p>Spring Security protects your account with BCrypt encryption.</p>
+            </div>
+            <div class="feature-card">
+                <div class="feature-icon">🧮</div>
+                <h3>Math Calculator</h3>
+                <p>Type any arithmetic expression and get instant calculations.</p>
+            </div>
+            <div class="feature-card">
+                <div class="feature-icon">💬</div>
+                <h3>Natural Language</h3>
+                <p>Chat in plain English — no special commands needed.</p>
+            </div>
+            <div class="feature-card">
+                <div class="feature-icon">🌙</div>
+                <h3>Dark Mode</h3>
+                <p>Easy on the eyes with a beautiful dark theme toggle in chat.</p>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- Topics -->
+<section class="topics-section">
+    <div class="section-container">
+        <div class="section-header">
+            <h2>Ask Me Anything</h2>
+            <p>Here are some popular topics you can explore</p>
+        </div>
+        <div class="topics-grid">
+            <div class="topic-chip" onclick="goToChat('Tell me about artificial intelligence')">🤖 AI & ML</div>
+            <div class="topic-chip" onclick="goToChat('How does Spring Boot work?')">🍃 Spring Boot</div>
+            <div class="topic-chip" onclick="goToChat('Tell me a joke')">😂 Jokes</div>
+            <div class="topic-chip" onclick="goToChat('What time is it?')">⏰ Date & Time</div>
+            <div class="topic-chip" onclick="goToChat('25 * 4 + 10')">🧮 Calculator</div>
+            <div class="topic-chip" onclick="goToChat('What can you do?')">✨ Capabilities</div>
+            <div class="topic-chip" onclick="goToChat('Tell me about programming')">💻 Programming</div>
+            <div class="topic-chip" onclick="goToChat('What is the weather like?')">🌤️ Weather</div>
+        </div>
+    </div>
+</section>
+
+<!-- CTA Section -->
+<section class="cta-section">
+    <div class="cta-content">
+        <h2>Ready to Chat?</h2>
+        <p>Jump into an AI conversation right now — no waiting, no setup.</p>
+        <a th:href="@{/chat}" class="btn-primary btn-lg">
+            🚀 Open Chat Now
+        </a>
+    </div>
+</section>
+
+<!-- Footer -->
+<footer class="footer">
+    <div class="footer-container">
+        <div class="footer-brand">
+            <span>🤖</span> <strong>Nova AI Chatbot</strong>
+        </div>
+        <p class="footer-copy">Built with ❤️ using Spring Boot 3 | © 2025 Nova AI</p>
+        <div class="footer-links">
+            <a th:href="@{/home}">Home</a>
+            <a th:href="@{/chat}">Chat</a>
+            <a th:href="@{/profile}">Profile</a>
+            <a th:href="@{/logout}">Logout</a>
+        </div>
+    </div>
+</footer>
+
+<script>
+function toggleNav() {
+    document.querySelector('.navbar-links').classList.toggle('open');
+}
+function goToChat(msg) {
+    sessionStorage.setItem('preloadMessage', msg);
+    window.location.href = '/chat';
+}
+</script>
+</body>
+</html>
